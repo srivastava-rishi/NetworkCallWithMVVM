@@ -11,6 +11,6 @@ interface RetrofitService {
     suspend fun getBeerDetails(
       @Query("page") page:Int,
       @Query("per_page") per_page:Int
-    ): Response<List<BeerInfoNetworkEntity>>
+    ): List<BeerInfoNetworkEntity>
 
 }

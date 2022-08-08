@@ -1,6 +1,7 @@
 package com.rsstudio.networkcalling.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,24 +21,24 @@ constructor(
 
     var logTag = "@MainViewModel"
 
-    private val _beerData = MutableLiveData<List<BeerInfoNetworkEntity>>()
+    // the pattern we should follow generally
+    private val _beerData: MutableLiveData<List<BeerInfoNetworkEntity>> = MutableLiveData()
+    val beerData: LiveData<List<BeerInfoNetworkEntity>> get() = _beerData
 
     init {
         getBeerInfo()
     }
 
 
-    private fun getBeerInfo() = viewModelScope.launch {
+    private fun getBeerInfo() {
 
-        repository.getBeerInfo().let { response ->
+        viewModelScope.launch {
 
-            if (response.isSuccessful){
-                _beerData.postValue(response.body())
-            }else{
-                Log.d(logTag, "error: ${response.errorBody()} ")
-            }
+            val result = repository.getBeerInfo(1,10)
 
-        }
+            _beerData.value = result
+
     }
+}
 
 }

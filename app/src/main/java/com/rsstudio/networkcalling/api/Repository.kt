@@ -7,5 +7,5 @@ class Repository
   @Inject
   constructor(private val api: RetrofitService) {
 
-    suspend fun getBeerInfo() = api.getBeerDetails(1,10)
+    suspend fun getBeerInfo(page:Int,per_Page:Int) = api.getBeerDetails(page,per_Page)
 }

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rsstudio.networkcalling">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -12,6 +15,7 @@
         android:theme="@style/Theme.NetworkCalling">
         <activity
             android:name=".splash.SplashActivity"
+            android:theme="@style/Simple_Theme_1"
             android:exported="true" >
 
             <intent-filter>
@@ -22,6 +26,7 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
+            android:theme="@style/Simple_Theme_1"
             android:exported="false"/>
     </application>
 
