@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rsstudio.networkcalling.R
+import com.rsstudio.networkcalling.adapter.MainAdapter
 import com.rsstudio.networkcalling.api.BeerInfoNetworkEntity
 import com.rsstudio.networkcalling.databinding.ActivityMainBinding
 import com.rsstudio.networkcalling.viewmodel.MainViewModel
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     var logTag = "@MainActivity"
 
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         //
         initTheme()
+        initRecyclerView()
 
         viewModel.beerData.observe(this) {
 
@@ -34,12 +38,22 @@ class MainActivity : AppCompatActivity() {
                 // submit list
                 val list: MutableList<BeerInfoNetworkEntity> = mutableListOf()
                 list.addAll(it)
+                mainAdapter.submitList(list)
                 Log.d(logTag, "onCreate: data$list")
 
             }
         }
 
     }
+
+    private fun initRecyclerView() {
+        val llm = LinearLayoutManager(this)
+        binding.rvBeerInfo.setHasFixedSize(true)
+        binding.rvBeerInfo.layoutManager = llm
+        mainAdapter = MainAdapter(this)
+        binding.rvBeerInfo.adapter = mainAdapter
+    }
+
 
     private fun initTheme() {
         window.statusBarColor = resources.getColor(R.color.Black)
